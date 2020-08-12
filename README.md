@@ -36,6 +36,7 @@ For example:
 | `setType` | Sets the type to load configuration from | `string` $typeName |
 | `load` | Loads configuration if it's an existing type |  |
 | `loadConfiguration` | Shorter method to run `setTable`, `setType` and `load` at once | `string` $tableName <br> `string` $typeName |
+| `useLocalLangFile` | Set a locallang file (beginning with `EXT:`) to use in labels | `string` $localLangFile |
 | `saveToTca` | Saves the manipulated configuration to TCA |  |
 | `addField` | Adds a field to selected type | `string` $typeName <br> `string` $position (optional) <br> `string` $alternativeLabel (optional) |
 | `addPalette` | Adds an existing palette to selected type | `string` $paletteName <br> `string` $position (optional)<br> `string` $alternativeLabel (optional) |
@@ -104,6 +105,16 @@ $tcaBuilder
             ]
         ]
     )
+    ->saveToTca();
+```
+### Use language file
+
+```php
+$tcaBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SpoonerWeb\TcaBuilder\TcaBuilder::class);
+$tcaBuilder
+    ->loadConfiguration('pages', \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_MOUNTPOINT)
+    ->useLocalLangFile('EXT:my_extension/Resources/Private/Language/locallang.xlf')
+    ->addField('new_field', '', 'LANG:new_field') // Used label: "LLL:EXT:my_extension/Resources/Private/Language/locallang.xlf:new_field"
     ->saveToTca();
 ```
 

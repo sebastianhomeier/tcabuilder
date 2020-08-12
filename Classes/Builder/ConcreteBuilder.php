@@ -26,12 +26,15 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected $customOverrides = [];
 
+    protected $locallangFile = '';
+
     public function reset()
     {
         $this->table = '';
         $this->selectedType = '';
         $this->fields = [];
         $this->customOverrides = [];
+        $this->locallangFile = '';
     }
 
     public function setTable(string $table)
@@ -47,7 +50,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function addField(string $fieldName, string $position = '', string $altLabel = '')
     {
         if ($altLabel) {
-            $fieldName .= ';' . $altLabel;
+            $fieldName .= ';' . $this->getLabel($altLabel);
         }
         if ($position) {
             $this->addFieldToPosition($fieldName, $position);
@@ -69,7 +72,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $paletteNameArray[] = '--palette--';
         if ($altLabel) {
-            $paletteNameArray[] = $altLabel;
+            $paletteNameArray[] = $this->getLabel($altLabel);
         } else {
             $paletteNameArray[] = '';
         }
@@ -99,7 +102,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function addDiv(string $label, string $position = '')
     {
-        $fieldName = '--div--;' . $label;
+        $fieldName = '--div--;' . $this->getLabel($label);
         if ($position) {
             $this->addFieldToPosition($fieldName, $position);
         } else {
@@ -126,7 +129,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function getDivByLabel(string $label): string
     {
-        return '--div--;' . $label;
+        return '--div--;' . $this->getLabel($label);
     }
 
     public function addCustomOverride(string $fieldName, array $override)
@@ -155,6 +158,11 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         $this->reset();
+    }
+
+    public function useLocalLangFile(string $filePath)
+    {
+        $this->locallangFile = $filePath;
     }
 
     protected function addFieldToPosition(string $fieldName, string $position)
@@ -198,5 +206,14 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     protected function beginsWith($value, string $begin): bool
     {
         return strpos($value, $begin) === 0;
+    }
+
+    protected function getLabel(string $label): string
+    {
+        if ($this->locallangFile !== '' && strpos($label, 'LANG:') === 0) {
+            return str_replace('LANG:', 'LLL:' . $this->locallangFile . ':', $label);
+        }
+
+        return $label;
     }
 }

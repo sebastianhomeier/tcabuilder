@@ -68,6 +68,20 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * Sets a locallang file (beginning with 'EXT:') to be used
+     * whenever using a label (label must begin with 'LANG:')
+     *
+     * @param string $localLangFile
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function useLocalLangFile(string $localLangFile)
+    {
+        $this->tcaBuilder->useLocalLangFile($localLangFile);
+
+        return $this;
+    }
+
+    /**
      * Adds a field to TCA at the end or at specific position
      *
      * @param string $fieldName

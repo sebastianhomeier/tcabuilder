@@ -1,3 +1,8 @@
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+
 stages:
   - test
   - release
@@ -7,10 +12,10 @@ stages:
   image: php:7.2
   before_script:
     - apt-get update && apt-get install -y bash
-    - ls -l
     - bash ./docker_install.sh > /dev/null
     - composer install
   script:
+    - ls -l
     - vendor/bin/phpunit -c ./UnitTests.xml
 
 "Upload to TER":

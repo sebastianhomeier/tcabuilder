@@ -151,7 +151,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             return;
         }
 
-        $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = implode(',', $this->fields);
+        $fields = array_values(array_filter($this->fields));
+        $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
 
         if ($this->customOverrides) {
             $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'] = $this->customOverrides;
@@ -163,6 +164,11 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function useLocalLangFile(string $filePath)
     {
         $this->locallangFile = $filePath;
+    }
+
+    public function doesFieldExist(string $fieldName)
+    {
+        return array_search($fieldName, $this->fields, true);
     }
 
     protected function addFieldToPosition(string $fieldName, string $position)

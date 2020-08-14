@@ -91,7 +91,11 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function addField(string $fieldName, string $position = '', string $altLabel = ''): TcaBuilder
     {
-        $this->tcaBuilder->addField($fieldName, $position, $altLabel);
+        if ($position && !$this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $position)[1])) {
+            $this->tcaBuilder->addField($fieldName, '', $altLabel);
+        } else {
+            $this->tcaBuilder->addField($fieldName, $position, $altLabel);
+        }
 
         return $this;
     }
@@ -117,8 +121,10 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function moveField(string $fieldName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
-        $this->tcaBuilder->removeField($fieldName);
-        $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);
+        if ($this->tcaBuilder->doesFieldExist($fieldName) && $this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $newPosition)[1])) {
+            $this->tcaBuilder->removeField($fieldName);
+            $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);
+        }
 
         return $this;
     }

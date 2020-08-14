@@ -1,5 +1,14 @@
 stages:
+  - test
   - release
+
+"Unit Tests":
+  stage: test
+  image: composer:2
+  before_script:
+    - composer install
+  script:
+    - composer info
 
 "Upload to TER":
   stage: release

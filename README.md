@@ -1,5 +1,8 @@
 # The TCA Builder
 
+[![pipeline status](https://git.spooner.io/spooner-web/tcabuilder/badges/main/pipeline.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
+[![coverage report](https://git.spooner.io/spooner-web/tcabuilder/badges/main/coverage.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
+
 ## What does it do?
 
 With the TCA builder you have the possibility to create

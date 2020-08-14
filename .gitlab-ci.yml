@@ -4,7 +4,7 @@ stages:
 
 "Unit Tests":
   stage: test
-  image: phpunit/phpunit:7
+  image: phpunit/phpunit:latest
   before_script:
     - composer install
   script:

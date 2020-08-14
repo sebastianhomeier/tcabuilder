@@ -9,9 +9,9 @@ stages:
     - apt-get update && apt-get install -y bash
     - ls -l
     - bash ./docker_install.sh > /dev/null
+    - composer install
   script:
-    - php -v
-    - php -i
+    - vendor/bin/phpunit -c ./UnitTests.xml
 
 "Upload to TER":
   stage: release

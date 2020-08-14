@@ -4,12 +4,8 @@ stages:
 
 "Unit Tests":
   stage: test
-  image: composer:2
+  image: phpunit/phpunit:7
   before_script:
-    - apk add --update libxml2-dev
-    - docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache
-    - pecl install xdebug
-    - docker-php-ext-enable xdebug
     - composer install
   script:
     - composer info

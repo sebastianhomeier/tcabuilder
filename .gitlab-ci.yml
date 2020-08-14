@@ -6,6 +6,7 @@ stages:
   stage: test
   image: phpunit/phpunit:latest
   before_script:
+    - apk add --update bash
     - composer install
   script:
     - composer info

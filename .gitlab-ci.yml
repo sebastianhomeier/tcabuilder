@@ -4,12 +4,12 @@ stages:
 
 "Unit Tests":
   stage: test
-  image: phpunit/phpunit:latest
+  image: php:7.2
   before_script:
-    - apk add --update bash
-    - composer install
+    - apt-get update && apt-get install -y bash
+    - ls -l
+    - bash ./docker_install.sh > /dev/null
   script:
-    - composer info
     - php -v
     - php -i
 

@@ -16,7 +16,10 @@ stages:
     - composer install
   script:
     - ls -l
-    - vendor/bin/phpunit -c ./UnitTests.xml
+    - vendor/bin/phpunit -c ./UnitTests.xml --log-junit build/junit-report.xml
+  artifacts:
+    reports:
+      junit: build/junit-report.xml
 
 "Upload to TER":
   stage: release

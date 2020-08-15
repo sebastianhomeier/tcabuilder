@@ -165,8 +165,10 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function movePalette(string $paletteName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
-        $this->tcaBuilder->removePalette($paletteName);
-        $this->tcaBuilder->addPalette($paletteName, $newPosition, $newLabel);
+        if ($this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $newPosition)[1])) {
+            $this->tcaBuilder->removePalette($paletteName);
+            $this->tcaBuilder->addPalette($paletteName, $newPosition, $newLabel);
+        }
 
         return $this;
     }

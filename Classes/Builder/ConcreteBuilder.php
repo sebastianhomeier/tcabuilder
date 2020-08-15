@@ -98,6 +98,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
                 return $palette;
             }
         }
+
+        return '';
     }
 
     public function addDiv(string $label, string $position = '')
@@ -124,11 +126,15 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $allDivs = array_values(array_filter($this->fields, [$this, 'beginsWithDiv']));
 
-        return $allDivs[$position];
+        return $allDivs[$position] ?? '';
     }
 
     public function getDivByLabel(string $label): string
     {
+        if (!$this->doesFieldExist('--div--;' . $this->getLabel($label))) {
+            return '';
+        }
+
         return '--div--;' . $this->getLabel($label);
     }
 

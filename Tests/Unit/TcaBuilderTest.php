@@ -1,5 +1,5 @@
 <?php
-namespace SpoonerWeb\TcaBuilder\Unit\Tests;
+namespace SpoonerWeb\TcaBuilder\Tests\Unit;
 
 /*
  * This file is part of a TYPO3 extension.
@@ -16,20 +16,20 @@ namespace SpoonerWeb\TcaBuilder\Unit\Tests;
 
 use SpoonerWeb\TcaBuilder\TcaBuilder;
 
-class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
+class TcaBuilderTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @var \SpoonerWeb\TcaBuilder\TcaBuilder
      */
     protected $tcaBuilder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tcaBuilder = new TcaBuilder();
         $this->tcaBuilder->loadConfiguration('table', 'type');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->tcaBuilder);
     }

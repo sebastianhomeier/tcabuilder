@@ -16,3 +16,7 @@ docker-php-ext-enable xdebug
 
 # Install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Output versions
+php -v
+php -i | grep xdebug

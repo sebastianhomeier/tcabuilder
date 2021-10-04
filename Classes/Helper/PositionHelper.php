@@ -14,6 +14,7 @@ namespace SpoonerWeb\TcaBuilder\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 
+use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PositionHelper
@@ -28,6 +29,14 @@ class PositionHelper
         [$direction,] = GeneralUtility::trimExplode(':', $position);
         $fieldNameToSearch = str_replace($direction . ':', '', $position);
         $key = array_search($fieldNameToSearch, $fields, true);
+        if ($key === false) {
+            $fieldNameToSearchWithoutLabel = StringHelper::removeLabelFromFieldName($fieldNameToSearch);
+            $shortenedFields = [];
+            foreach ($fields as $key => $field) {
+                $shortenedFields[$key] = StringHelper::removeLabelFromFieldName($field);
+            }
+            $key = array_search($fieldNameToSearchWithoutLabel, $shortenedFields, true);
+        }
         if ($key !== false) {
             switch ($direction) {
                 case 'before':
@@ -44,5 +53,12 @@ class PositionHelper
         }
 
         ArrayHelper::resetKeys($fields);
+    }
+
+    public static function fieldHasLabel(string $field): bool
+    {
+        $countingSemicolons = count_chars($field, 1)[ord(';')];
+
+        return $countingSemicolons === 1 && GeneralUtility::trimExplode(';', $field)[0] !== ConcreteBuilder::DIV_MARKER;
     }
 }

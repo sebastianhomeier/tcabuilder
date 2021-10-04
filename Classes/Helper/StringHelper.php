@@ -14,6 +14,8 @@ namespace SpoonerWeb\TcaBuilder\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class StringHelper
 {
     public static function removeStringInList(array &$fields, string $fieldName)
@@ -30,5 +32,15 @@ class StringHelper
     public static function stringStartsWith(string $string, string $startsWith): bool
     {
         return strpos($string, $startsWith) === 0;
+    }
+
+    public static function removeLabelFromFieldName(string $fieldName): string
+    {
+        $fieldNameWithoutLabel = '';
+        if (PositionHelper::fieldHasLabel($fieldName)) {
+            [$fieldNameWithoutLabel,] = GeneralUtility::trimExplode(';', $fieldName);
+        }
+
+        return $fieldNameWithoutLabel ?: $fieldName;
     }
 }

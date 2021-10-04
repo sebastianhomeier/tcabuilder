@@ -244,9 +244,13 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->locallangFile = $filePath;
     }
 
-    public function doesFieldExist(string $fieldName)
+    public function doesFieldExist(string $fieldName): bool
     {
-        return array_search($fieldName, $this->fields, true);
+        $fieldsWithoutLabel = [];
+        foreach ($this->fields as $field) {
+            $fieldsWithoutLabel[] = StringHelper::removeLabelFromFieldName($field);
+        }
+        return array_search($fieldName, $fieldsWithoutLabel, true) !== false;
     }
 
     protected function beginsWithDiv($value): bool

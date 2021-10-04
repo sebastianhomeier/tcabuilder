@@ -16,6 +16,8 @@ namespace SpoonerWeb\TcaBuilder;
 
 use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
 use SpoonerWeb\TcaBuilder\Builder\ConcretePaletteBuilder;
+use SpoonerWeb\TcaBuilder\Helper\PositionHelper;
+use SpoonerWeb\TcaBuilder\Helper\StringHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
@@ -113,7 +115,18 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = []): TcaBuilder
     {
-        if ($position && $this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $position)[1]) === false) {
+        if ($position === '') {
+            $this->tcaBuilder->addField($fieldName, '', $altLabel, $columnsOverrides);
+
+            return $this;
+        }
+        [,$field] = GeneralUtility::trimExplode(':', $position);
+        $fieldWithoutLabel = '';
+        if (PositionHelper::fieldHasLabel($field)) {
+            $fieldWithoutLabel = StringHelper::removeLabelFromFieldName($field);
+        }
+        $doesFieldExist = $this->tcaBuilder->doesFieldExist($field, true) || ($fieldWithoutLabel && $this->tcaBuilder->doesFieldExist($fieldWithoutLabel, true));
+        if ($position && $doesFieldExist === false) {
             $this->tcaBuilder->addField($fieldName, '', $altLabel, $columnsOverrides);
         } else {
             $this->tcaBuilder->addField($fieldName, $position, $altLabel, $columnsOverrides);
@@ -143,6 +156,12 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function moveField(string $fieldName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
+        [, $field] = GeneralUtility::trimExplode(':', $newPosition);
+        $fieldWithoutLabel = '';
+        if (PositionHelper::fieldHasLabel($field)) {
+            $fieldWithoutLabel = StringHelper::removeLabelFromFieldName($field);
+        }
+
         if ($this->tcaBuilder->doesFieldExist($fieldName) && $this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $newPosition)[1])) {
             $this->tcaBuilder->removeField($fieldName);
             $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);

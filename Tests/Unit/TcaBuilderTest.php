@@ -331,6 +331,24 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function addThreeFieldsWithAltLabelReturnsCorrectFieldsWithAltLabels()
+    {
+        $this->tcaBuilder
+            ->addField('newField')
+            ->addField('newSecondField', '', 'Second Field')
+            ->addField('newFourthField')
+            ->addField('newThirdField', 'after:newSecondField', 'Third Field')
+            ->saveToTca();
+
+        self::assertEquals(
+            'newField,newSecondField;Second Field,newThirdField;Third Field,newFourthField',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
+        );
+    }
+
+    /**
+     * @test
+     */
     public function removeFieldWithStringRemovesField()
     {
         $this->tcaBuilder
@@ -367,6 +385,21 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals('newField,newThirdField,newSecondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
+    }
+
+    /**
+     * @test
+     */
+    public function moveFieldWithStringAndPositionWithLabelReturnsFieldListInCorrectOrder()
+    {
+        $this->tcaBuilder
+            ->addField('newField;Label')
+            ->addField('newSecondField')
+            ->addField('newThirdField')
+            ->moveField('newThirdField', 'after:newField')
+            ->saveToTca();
+
+        self::assertEquals('newField;Label,newThirdField,newSecondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -1128,7 +1161,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
      */
     public function copyFromTextTypeAndMoveHeaderFieldAndUseAltLabelReturnsCorrectFieldsOrderAndLabels()
     {
-        $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['text'][ConcreteBuilder::SHOWITEM_KEYWORD] = '--palette--;;general,--palette--;headers,bodytext';
+        $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['text'][ConcreteBuilder::SHOWITEM_KEYWORD] = '--palette--;;general,--palette--;;headers,bodytext';
 
         $this->tcaBuilder
             ->copyFromType('text')

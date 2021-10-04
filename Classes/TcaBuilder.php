@@ -126,7 +126,7 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $fieldWithoutLabel = StringHelper::removeLabelFromFieldName($field);
         }
         $doesFieldExist = $this->tcaBuilder->doesFieldExist($field) || ($fieldWithoutLabel && $this->tcaBuilder->doesFieldExist($fieldWithoutLabel));
-        if ($position && $doesFieldExist === false) {
+        if ($doesFieldExist === false) {
             $this->tcaBuilder->addField($fieldName, '', $altLabel, $columnsOverrides);
         } else {
             $this->tcaBuilder->addField($fieldName, $position, $altLabel, $columnsOverrides);

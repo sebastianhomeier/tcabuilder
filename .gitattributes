@@ -1,4 +1,6 @@
 /.Build/ export-ignore
+/.gitlab-ci/ export-ignore
+/.ddev/ export-ignore
 /Tests/ export-ignore
 /badges/ export-ignore
 /.gitattributes export-ignore

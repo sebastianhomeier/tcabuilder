@@ -27,7 +27,7 @@
   },
   "require-dev": {
     "nimut/testing-framework": "^4.2 || ^5.1",
-    "rector/rector": "^v0.8"
+    "rector/rector": "^v0.12"
   },
   "autoload": {
     "psr-4": {
@@ -39,12 +39,18 @@
       "SpoonerWeb\\TcaBuilder\\Tests\\": "Tests"
     }
   },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
   "scripts": {
     "test:unit": "phpunit -c ./.Build/phpunit.xml"
   },
   "extra": {
     "typo3/cms": {
-      "extension-key": "tcabuilder"
+      "extension-key": "tcabuilder",
+      "app-dir": ".Build",
+      "web-dir": ".Build/public"
     }
   }
 }

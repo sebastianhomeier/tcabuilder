@@ -23,7 +23,7 @@ stages:
   stage: test
   image: composer:2.0.7
   before_script:
-    - composer global require phpstan/phpstan
+    - composer global require saschaegerer/phpstan-typo3
   script:
     - composer install --ignore-platform-reqs
     - /tmp/vendor/bin/phpstan analyse -l 4 -c .gitlab-ci/phpstan.neon
@@ -37,7 +37,7 @@ stages:
     - apk update && apk add icu-dev
     - docker-php-ext-install intl
   script:
-    - vendor/bin/rector process --config .gitlab-ci/rector.php -n --autoload-file=.gitlab-ci/rector-autoload.php -vvv
+    - composer test:rector
   allow_failure: true
 
 "Create Badge":

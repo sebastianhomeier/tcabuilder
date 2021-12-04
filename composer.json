@@ -44,7 +44,9 @@
     "bin-dir": ".Build/bin"
   },
   "scripts": {
-    "test:unit": "phpunit -c ./.Build/phpunit.xml"
+    "test:unit": "phpunit -c ./.gitlab-ci/phpunit.xml",
+    "test:rector": "rector process -c ./.gitlab-ci/rector.php Classes/ -n",
+    "run:rector": "rector process -c ./.gitlab-ci/rector.php Classes/"
   },
   "extra": {
     "typo3/cms": {

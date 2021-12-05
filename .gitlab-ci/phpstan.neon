@@ -45,7 +45,7 @@ parameters:
     ignoreErrors:
         - '#invalid value \(\$identifier\)#'
     bootstrapFiles:
-        - phpstan.bootstrap.php
+        - '/tmp/vendor/saschaegerer/phpstan-typo3/phpstan.bootstrap.php'
     typo3:
         contextApiGetAspectMapping:
             date: \TYPO3\CMS\Core\Context\DateTimeAspect

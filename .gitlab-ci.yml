@@ -19,15 +19,6 @@ stages:
   script:
     - php-cs-fixer fix --dry-run --config=.gitlab-ci/.php_cs --diff
 
-"PHP Static Analyzer":
-  stage: test
-  image: composer:2.0.7
-  before_script:
-    - composer global require saschaegerer/phpstan-typo3
-  script:
-    - composer install --ignore-platform-reqs
-    - /tmp/vendor/bin/phpstan analyse -l 4 -c .gitlab-ci/phpstan.neon
-
 "PHP Rector Analyzer":
   stage: test
   image: composer:2.0.7
@@ -138,58 +129,6 @@ stages:
     PHP_VERSION: '8.0'
     TYPO3_VERSION: '^10.4'
   allow_failure: true
-
-"Mutation Tests":
-  stage: test
-  image: php:7.4
-  variables:
-    GIT_STRATEGY: "clone"
-  allow_failure: true
-  before_script:
-    - set -xe
-    - apt-get update -yqq
-    - apt-get install git unzip zlib1g-dev libzip-dev -yqq
-    - docker-php-ext-install zip
-    - pecl install xdebug
-    - docker-php-ext-enable xdebug
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-    - export TYPO3_PATH_WEB="$PWD/private"
-    - composer config cache-dir /cache/composer
-  script:
-    - composer install --ignore-platform-reqs
-    # Have to install it here instead of in composer.json the version using the json output isn't compatible with PHP 7.2
-    - composer require --dev infection/infection
-    - XDEBUG_MODE=coverage ./vendor/bin/infection --min-msi=80 --min-covered-msi=80 --threads=4
-  artifacts:
-    when: always
-    paths:
-      - build/infection-log.json
-    expire_in: 30 min
-
-"Mutation Badges":
-  stage: badges
-  image: python:3.9
-  allow_failure: true
-  needs: ["Mutation Tests"]
-  before_script:
-    - echo "Python other dependencies installation"
-    - pip3 install anybadge
-    - apt update -y
-    - apt install -y jq bc
-  script:
-    - mkdir badges
-    - cd badges
-    - mutation_msi=$(cat ../build/infection-log.json | jq .stats.msi)
-    - anybadge -l "Mutation MSI" -v $mutation_msi -f mutation_msi.svg 50=red 90=yellow
-    - mutation_mcc=$(cat ../build/infection-log.json | jq .stats.mutationCodeCoverage)
-    - anybadge -l "Mutation MCC" -v $mutation_mcc -f mutation_mcc.svg 50=red 90=yellow
-    - mutation_ccmsi=$(cat ../build/infection-log.json | jq .stats.coveredCodeMsi)
-    - anybadge -l "Mutation CCMSI" -v $mutation_ccmsi -f mutation_ccmsi.svg 50=red 90=yellow
-  artifacts:
-    paths:
-      - badges/
-    when: always
-    expire_in: 4 weeks
 
 "Upload to TER":
   stage: release

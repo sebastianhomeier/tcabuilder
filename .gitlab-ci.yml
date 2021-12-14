@@ -53,7 +53,7 @@ stages:
     - apt-get update && apt-get install -y bash
     - bash ./.Build/docker_install.sh > /dev/null
     - composer install --ignore-platform-reqs
-    - composer require typo3/minimal:^10.4 typo3/cms-lowlevel:^10.4 -W
+    - composer require typo3/minimal:$TYPO3_VERSION typo3/cms-lowlevel:$TYPO3_VERSION nimut/testing-framework:$TESTFW_VERSION -W
   script:
     - ls -l
     - XDEBUG_MODE=coverage vendor/bin/phpunit -c ./.Build/phpunit.xml
@@ -61,20 +61,19 @@ stages:
     reports:
       junit: build/*-report.xml
 
-"Unit Tests with PHP 7.2":
-  <<: *unit_tests
-  variables:
-    PHP_VERSION: '7.2'
-
 "Unit Tests with PHP 7.4":
   <<: *unit_tests
   variables:
     PHP_VERSION: '7.4'
+    TYPO3_VERSION: '^10.4'
+    TESTFW_VERSION: '^5.1'
 
 "Unit Tests with PHP 8.0":
   <<: *unit_tests
   variables:
     PHP_VERSION: '8.0'
+    TYPO3_VERSION: '^11.5'
+    TESTFW_VERSION: '^6.0'
   allow_failure: true
 
 "Mutation Tests":

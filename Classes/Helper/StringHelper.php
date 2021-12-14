@@ -14,8 +14,6 @@ namespace SpoonerWeb\TcaBuilder\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 class StringHelper
 {
     public static function removeStringInList(array &$fields, string $fieldName)
@@ -38,7 +36,7 @@ class StringHelper
     {
         $fieldNameWithoutLabel = '';
         if (PositionHelper::fieldHasLabel($fieldName)) {
-            [$fieldNameWithoutLabel,] = GeneralUtility::trimExplode(';', $fieldName);
+            [$fieldNameWithoutLabel,] = ArrayHelper::trimExplode(';', $fieldName);
         }
 
         return $fieldNameWithoutLabel ?: $fieldName;

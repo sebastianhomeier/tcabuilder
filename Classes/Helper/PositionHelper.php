@@ -15,7 +15,6 @@ namespace SpoonerWeb\TcaBuilder\Helper;
  */
 
 use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PositionHelper
 {
@@ -26,7 +25,7 @@ class PositionHelper
             return;
         }
 
-        [$direction,] = GeneralUtility::trimExplode(':', $position);
+        [$direction,] = ArrayHelper::trimExplode(':', $position);
         $fieldNameToSearch = str_replace($direction . ':', '', $position);
         $key = array_search($fieldNameToSearch, $fields, true);
         if ($key === false) {
@@ -59,6 +58,6 @@ class PositionHelper
     {
         $countingSemicolons = count_chars($field, 1)[ord(';')];
 
-        return $countingSemicolons === 1 && GeneralUtility::trimExplode(';', $field)[0] !== ConcreteBuilder::DIV_MARKER;
+        return $countingSemicolons === 1 && ArrayHelper::trimExplode(';', $field)[0] !== ConcreteBuilder::DIV_MARKER;
     }
 }

@@ -18,7 +18,7 @@ class ColumnsTemplates
 {
     public const DISABLED_TEMPLATE = [
         'exclude' => true,
-        'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
+        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
         'config' => [
             'type' => 'check',
             'default' => 0
@@ -27,14 +27,14 @@ class ColumnsTemplates
 
     public const LANGUAGE_FIELD_TEMPLATE = [
         'exclude' => true,
-        'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.language',
+        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'special' => 'languages',
             'items' => [
                 [
-                    'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
+                    'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
                     -1,
                     'flags-multiple'
                 ],
@@ -46,7 +46,7 @@ class ColumnsTemplates
     public const LANGUAGE_PARENT_FIELD_TEMPLATE = [
         'displayCond' => 'FIELD:sys_language_uid:>:0',
         'exclude' => true,
-        'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',

@@ -21,13 +21,13 @@
     }
   ],
   "require": {
-    "php": ">= 7.2, < 8.0",
-    "typo3/cms-backend": "^v8.7 || ^v9.5 || ^v10.4 || ^v11.0",
-    "typo3/cms-core": "^v8.7 || ^v9.5 || ^v10.4 || ^v11.0"
+    "php": ">= 7.4, < 8.1",
+    "typo3/cms-backend": "^v9.5 || ^v10.4 || ^v11.0",
+    "typo3/cms-core": "^v9.5 || ^v10.4 || ^v11.0"
   },
   "require-dev": {
-    "nimut/testing-framework": "^4.2 || ^5.1",
-    "rector/rector": "^v0.8"
+    "nimut/testing-framework": "^5.1 || ^6.0",
+    "rector/rector": "^v0.12"
   },
   "autoload": {
     "psr-4": {

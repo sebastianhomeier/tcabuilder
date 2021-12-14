@@ -16,11 +16,11 @@ namespace SpoonerWeb\TcaBuilder;
 
 use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
 use SpoonerWeb\TcaBuilder\Builder\ConcretePaletteBuilder;
+use SpoonerWeb\TcaBuilder\Helper\ArrayHelper;
 use SpoonerWeb\TcaBuilder\Helper\PositionHelper;
 use SpoonerWeb\TcaBuilder\Helper\StringHelper;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
+class TcaBuilder
 {
 
     /**
@@ -35,8 +35,8 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function __construct()
     {
-        $this->tcaBuilder = GeneralUtility::makeInstance(ConcreteBuilder::class);
-        $this->paletteBuilder = GeneralUtility::makeInstance(ConcretePaletteBuilder::class);
+        $this->tcaBuilder = new ConcreteBuilder();
+        $this->paletteBuilder = new ConcretePaletteBuilder();
     }
 
     /**
@@ -120,7 +120,7 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
             return $this;
         }
-        [,$field] = GeneralUtility::trimExplode(':', $position);
+        [,$field] = ArrayHelper::trimExplode(':', $position);
         $fieldWithoutLabel = '';
         if (PositionHelper::fieldHasLabel($field)) {
             $fieldWithoutLabel = StringHelper::removeLabelFromFieldName($field);
@@ -156,13 +156,13 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function moveField(string $fieldName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
-        [, $field] = GeneralUtility::trimExplode(':', $newPosition);
+        [, $field] = ArrayHelper::trimExplode(':', $newPosition);
         $fieldWithoutLabel = '';
         if (PositionHelper::fieldHasLabel($field)) {
             $fieldWithoutLabel = StringHelper::removeLabelFromFieldName($field);
         }
 
-        if ($this->tcaBuilder->doesFieldExist($fieldName) && $this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $newPosition)[1])) {
+        if ($this->tcaBuilder->doesFieldExist($fieldName) && $this->tcaBuilder->doesFieldExist(ArrayHelper::trimExplode(':', $newPosition)[1])) {
             $this->tcaBuilder->removeField($fieldName);
             $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);
         }
@@ -206,7 +206,7 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function movePalette(string $paletteName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
-        if ($this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $newPosition)[1])) {
+        if ($this->tcaBuilder->doesFieldExist(ArrayHelper::trimExplode(':', $newPosition)[1])) {
             $this->tcaBuilder->removePalette($paletteName);
             $this->tcaBuilder->addPalette($paletteName, $newPosition, $newLabel);
         }

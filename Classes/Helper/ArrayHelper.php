@@ -20,4 +20,11 @@ class ArrayHelper
     {
         $fields = array_values($fields);
     }
+
+    public static function trimExplode(string $delim, ?string $string): array
+    {
+        $result = explode($delim, $string) ?: [];
+
+        return array_map('trim', $result);
+    }
 }

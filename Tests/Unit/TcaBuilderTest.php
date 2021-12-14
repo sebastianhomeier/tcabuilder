@@ -24,13 +24,14 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
      */
     protected $tcaBuilder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tcaBuilder = new TcaBuilder();
         $this->tcaBuilder->loadConfiguration('table', 'type');
+        $GLOBALS['TCA'] = $GLOBALS['TCA'] ?? [];
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->tcaBuilder);
     }

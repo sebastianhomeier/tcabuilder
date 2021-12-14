@@ -17,7 +17,7 @@ namespace SpoonerWeb\TcaBuilder\Builder;
 use SpoonerWeb\TcaBuilder\Helper\PositionHelper;
 use SpoonerWeb\TcaBuilder\Helper\StringHelper;
 
-class ConcretePaletteBuilder implements \TYPO3\CMS\Core\SingletonInterface
+class ConcretePaletteBuilder
 {
     protected $paletteId = '';
 

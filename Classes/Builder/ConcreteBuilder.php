@@ -14,11 +14,11 @@ namespace SpoonerWeb\TcaBuilder\Builder;
  * The TYPO3 project - inspiring people to share!
  */
 
+use SpoonerWeb\TcaBuilder\Helper\ArrayHelper;
 use SpoonerWeb\TcaBuilder\Helper\PositionHelper;
 use SpoonerWeb\TcaBuilder\Helper\StringHelper;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
+class ConcreteBuilder
 {
     public const TYPES_KEYWORD = 'types';
     public const SHOWITEM_KEYWORD = 'showitem';
@@ -201,7 +201,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $loadedFields = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType][self::SHOWITEM_KEYWORD];
 
-        $this->fields = GeneralUtility::trimExplode(',', $loadedFields);
+        $this->fields = ArrayHelper::trimExplode(',', $loadedFields);
         $this->columnsOverrides = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType]['columnsOverrides'] ?? null;
     }
 

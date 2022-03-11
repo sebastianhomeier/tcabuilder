@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
-use Rector\PostRector\Rector\NameImportingPostRector;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\FileProcessor\Composer\Rector\ExtensionComposerRector;
 use Ssch\TYPO3Rector\Rector\General\ConvertImplicitVariablesToExplicitGlobalsRector;
 use Ssch\TYPO3Rector\Rector\General\ExtEmConfRector;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
+
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -30,6 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // Define your target version which you want to support
     $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_74);
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_80);
 
     // If you have an editorconfig and changed files should keep their format enable it here
     // $parameters->set(Option::ENABLE_EDITORCONFIG, true);
@@ -40,22 +41,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //    __DIR__ . '/packages/acme_demo/',
     // ]);
 
-    // If you set option Option::AUTO_IMPORT_NAMES to true, you should consider excluding some TYPO3 files.
     // If you use the option --config change __DIR__ to getcwd()
     $parameters->set(Option::SKIP, [
-        NameImportingPostRector::class => [
-            'ClassAliasMap.php',
-            'ext_emconf.php',
-            'ext_localconf.php',
-            'ext_tables.php',
-            getcwd() . '/**/Configuration/AjaxRoutes.php',
-            getcwd() . '/**/Configuration/Backend/AjaxRoutes.php',
-            getcwd() . '/**/Configuration/Commands.php',
-            getcwd() . '/**/Configuration/ExpressionLanguage.php',
-            getcwd() . '/**/Configuration/Extbase/Persistence/Classes.php',
-            getcwd() . '/**/Configuration/RequestMiddlewares.php',
-            getcwd() . '/**/Configuration/TCA/*',
-        ],
         // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
         getcwd() . '/**/Configuration/ExtensionBuilder/*',
         // We skip those directories on purpose as there might be node_modules or similar
@@ -65,6 +52,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         getcwd() . '/**/Resources/**/BowerComponents/*',
         getcwd() . '/**/Resources/**/bower_components/*',
         getcwd() . '/**/Resources/**/build/*',
+    ]);
+
+    // This is used by the class \Ssch\TYPO3Rector\Rector\PostRector\FullQualifiedNamePostRector to force FQN in this paths and files
+    $parameters->set(Typo3Option::PATHS_FULL_QUALIFIED_NAMESPACES, [
+        # If you are targeting TYPO3 Version 11 use can now use Short namespace
+        # @see namespace https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ExtensionArchitecture/ConfigurationFiles/Index.html
+        'ext_localconf.php',
+        'ext_tables.php',
+        'ClassAliasMap.php',
+        getcwd() . '/**/Configuration/*.php',
+        getcwd() . '/**/Configuration/**/*.php',
     ]);
 
     // If you have trouble that rector cannot run because some TYPO3 constants are not defined add an additional constants file

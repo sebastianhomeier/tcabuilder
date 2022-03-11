@@ -17,11 +17,11 @@ stages:
   stage: test
   image: ekreative/php-cs-fixer:3
   script:
-    - php-cs-fixer fix --dry-run --config=.Build/.php_cs --diff
+    - php-cs-fixer fix --dry-run --config=.Build/php-cs-fixer.php --diff
 
 "PHP Static Analyzer":
   stage: test
-  image: composer:2.0.7
+  image: composer:2
   before_script:
     - composer global require phpstan/phpstan
   script:

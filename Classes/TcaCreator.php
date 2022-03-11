@@ -69,23 +69,23 @@ class TcaCreator
         array $additionalColumns = []
     ): array {
         $columns = [];
-        if ($controlConfiguration['enablecolumns']['disabled']) {
+        if ($controlConfiguration['enablecolumns']['disabled'] ?? false) {
             $columns[$controlConfiguration['enablecolumns']['disabled']] = ColumnsTemplates::DISABLED_TEMPLATE;
         }
 
-        if ($controlConfiguration['languageField']) {
+        if ($controlConfiguration['languageField'] ?? false) {
             $columns[$controlConfiguration['languageField']] = ColumnsTemplates::LANGUAGE_FIELD_TEMPLATE;
         }
 
-        if ($controlConfiguration['transOrigPointerField']) {
+        if ($controlConfiguration['transOrigPointerField'] ?? false) {
             $columns[$controlConfiguration['transOrigPointerField']] = ColumnsTemplates::getLanguageParentColumnWithReplacedTableName($tableName);
         }
 
-        if ($controlConfiguration['transOrigDiffSourceField']) {
+        if ($controlConfiguration['transOrigDiffSourceField'] ?? false) {
             $columns[$controlConfiguration['transOrigDiffSourceField']] = ColumnsTemplates::LANGUAGE_DIFFSOURCE_FIELD_TEMPLATE;
         }
 
-        if ($controlConfiguration['translationSource']) {
+        if ($controlConfiguration['translationSource'] ?? false) {
             $columns[$controlConfiguration['translationSource']] = ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE;
         }
 

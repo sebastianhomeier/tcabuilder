@@ -19,7 +19,7 @@ use SpoonerWeb\TcaBuilder\TcaCreator;
 use SpoonerWeb\TcaBuilder\TcaTemplates\ColumnsTemplates;
 use SpoonerWeb\TcaBuilder\TcaTemplates\ControlTemplates;
 
-class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
+class TcaCreatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test

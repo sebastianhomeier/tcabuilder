@@ -56,7 +56,7 @@ class PositionHelper
 
     public static function fieldHasLabel(string $field): bool
     {
-        $countingSemicolons = count_chars($field, 1)[ord(';')];
+        $countingSemicolons = count_chars($field, 1)[ord(';')] ?? 0;
 
         return $countingSemicolons === 1 && ArrayHelper::trimExplode(';', $field)[0] !== ConcreteBuilder::DIV_MARKER;
     }

@@ -17,7 +17,7 @@ namespace SpoonerWeb\TcaBuilder\Tests\Unit;
 use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
 use SpoonerWeb\TcaBuilder\TcaBuilder;
 
-class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
+class TcaBuilderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \SpoonerWeb\TcaBuilder\TcaBuilder
@@ -26,9 +26,9 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
     public function setUp(): void
     {
+        $GLOBALS['TCA'] = [];
         $this->tcaBuilder = new TcaBuilder();
         $this->tcaBuilder->loadConfiguration('table', 'type');
-        $GLOBALS['TCA'] = $GLOBALS['TCA'] ?? [];
     }
 
     public function tearDown(): void
@@ -53,7 +53,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->reset()
             ->saveToTca();
 
-        self::assertNull($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
+        self::assertNull($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD] ?? null);
     }
 
     /**
@@ -163,7 +163,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->removeType();
 
         self::assertCount(0, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
-        self::assertEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']);
+        self::assertEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'] ?? []);
     }
 
     /**
@@ -185,7 +185,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->removeType('type');
 
         self::assertCount(0, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
-        self::assertEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']);
+        self::assertEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'] ?? []);
     }
 
     /**

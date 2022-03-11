@@ -199,7 +199,7 @@ class ConcreteBuilder
 
     public function load()
     {
-        $loadedFields = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType][self::SHOWITEM_KEYWORD];
+        $loadedFields = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType][self::SHOWITEM_KEYWORD] ?? '';
 
         $this->fields = ArrayHelper::trimExplode(',', $loadedFields);
         $this->columnsOverrides = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType]['columnsOverrides'] ?? null;

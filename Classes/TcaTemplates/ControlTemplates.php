@@ -40,6 +40,6 @@ class ControlTemplates
 
     public const SORTING_TEMPLATE = [
         'default_sortby' => 'ORDER BY sorting',
-        'sortby' => 'sorting'
+        'sortby' => 'sorting',
     ];
 }

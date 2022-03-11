@@ -43,7 +43,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
             array_merge(
                 [
                     'title' => 'title',
-                    'label' => 'label'
+                    'label' => 'label',
                 ],
                 ControlTemplates::BASIC_TEMPLATE,
                 ControlTemplates::LANGUAGE_TEMPLATE,
@@ -72,7 +72,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
             array_merge(
                 [
                     'title' => 'title',
-                    'label' => 'label'
+                    'label' => 'label',
                 ],
                 ControlTemplates::BASIC_TEMPLATE
             ),
@@ -98,7 +98,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
             array_merge(
                 [
                     'title' => 'title',
-                    'label' => 'label'
+                    'label' => 'label',
                 ],
                 ControlTemplates::BASIC_TEMPLATE,
                 ControlTemplates::LANGUAGE_TEMPLATE
@@ -125,7 +125,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
             array_merge(
                 [
                     'title' => 'title',
-                    'label' => 'label'
+                    'label' => 'label',
                 ],
                 ControlTemplates::BASIC_TEMPLATE,
                 ControlTemplates::VERSION_TEMPLATE
@@ -152,7 +152,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
             array_merge(
                 [
                     'title' => 'title',
-                    'label' => 'label'
+                    'label' => 'label',
                 ],
                 ControlTemplates::BASIC_TEMPLATE,
                 ControlTemplates::SORTING_TEMPLATE
@@ -171,7 +171,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
             'label',
             [
                 'iconfile' => 'test.png',
-                'label' => 'New label'
+                'label' => 'New label',
             ],
             false,
             false,
@@ -183,7 +183,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
                 [
                     'title' => 'title',
                     'label' => 'New label',
-                    'iconfile' => 'test.png'
+                    'iconfile' => 'test.png',
                 ],
                 ControlTemplates::BASIC_TEMPLATE
             ),
@@ -207,7 +207,7 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
                 'sys_language_uid' => ColumnsTemplates::LANGUAGE_FIELD_TEMPLATE,
                 'l10n_parent' => ColumnsTemplates::getLanguageParentColumnWithReplacedTableName('tx_table'),
                 'l10n_diffsource' => ColumnsTemplates::LANGUAGE_DIFFSOURCE_FIELD_TEMPLATE,
-                'l10n_source' => ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE
+                'l10n_source' => ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE,
             ],
             $columns
         );
@@ -225,9 +225,9 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
                 'title' => [
                     'label' => 'Title',
                     'config' => [
-                        'type' => 'input'
-                    ]
-                ]
+                        'type' => 'input',
+                    ],
+                ],
             ]
         );
 
@@ -241,8 +241,8 @@ class TcaCreatorTest extends \PHPUnit\Framework\TestCase
                 'title' => [
                     'label' => 'Title',
                     'config' => [
-                        'type' => 'input'
-                    ]
+                        'type' => 'input',
+                    ],
                 ],
             ],
             $columns

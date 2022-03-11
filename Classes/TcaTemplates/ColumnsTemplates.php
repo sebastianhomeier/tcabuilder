@@ -21,8 +21,8 @@ class ColumnsTemplates
         'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
         'config' => [
             'type' => 'check',
-            'default' => 0
-        ]
+            'default' => 0,
+        ],
     ];
 
     public const LANGUAGE_FIELD_TEMPLATE = [
@@ -36,11 +36,11 @@ class ColumnsTemplates
                 [
                     'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
                     -1,
-                    'flags-multiple'
+                    'flags-multiple',
                 ],
             ],
             'default' => 0,
-        ]
+        ],
     ];
 
     public const LANGUAGE_PARENT_FIELD_TEMPLATE = [
@@ -56,21 +56,21 @@ class ColumnsTemplates
             'foreign_table' => '###TCABUILDER_TABLE###',
             'foreign_table_where' => 'AND ###TCABUILDER_TABLE###.pid=###CURRENT_PID### AND ###TCABUILDER_TABLE###.sys_language_uid IN (-1,0)',
             'default' => 0,
-        ]
+        ],
     ];
 
     public const LANGUAGE_DIFFSOURCE_FIELD_TEMPLATE = [
         'config' => [
             'type' => 'passthrough',
             'default' => '',
-        ]
+        ],
     ];
 
     public const LANGUAGE_SOURCE_FIELD_TEMPLATE = [
         'config' => [
             'type' => 'passthrough',
             'default' => 0,
-        ]
+        ],
     ];
 
     public static function getLanguageParentColumnWithReplacedTableName(string $tableName): array

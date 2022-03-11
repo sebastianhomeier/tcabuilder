@@ -184,7 +184,7 @@ class ConcreteBuilder
     {
         $this->customPalettes[$paletteId] = [
             'label' => $label,
-            self::SHOWITEM_KEYWORD => implode(',', $showItems)
+            self::SHOWITEM_KEYWORD => implode(',', $showItems),
         ];
 
         if ($position !== '') {

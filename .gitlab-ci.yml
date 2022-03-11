@@ -15,7 +15,7 @@ stages:
 
 "PHP CS Fixer":
   stage: test
-  image: ekreative/php-cs-fixer:2
+  image: ekreative/php-cs-fixer:3
   script:
     - php-cs-fixer fix --dry-run --config=.Build/.php_cs --diff
 

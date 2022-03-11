@@ -855,8 +855,8 @@ class TcaBuilderTest extends \PHPUnit\Framework\TestCase
         $config = [
             'label' => 'Test',
             'config' => [
-                'type' => 'check'
-            ]
+                'type' => 'check',
+            ],
         ];
         $this->tcaBuilder
             ->addOverride(
@@ -878,7 +878,7 @@ class TcaBuilderTest extends \PHPUnit\Framework\TestCase
             [
                 'header',
                 'bodytext',
-                'hidden'
+                'hidden',
             ],
             'customPaletteLabel'
         )->saveToTca();
@@ -902,7 +902,7 @@ class TcaBuilderTest extends \PHPUnit\Framework\TestCase
                 [
                     'header',
                     'bodytext',
-                    'hidden'
+                    'hidden',
                 ],
                 'customPaletteLabel',
                 'before:field2'
@@ -1137,8 +1137,8 @@ class TcaBuilderTest extends \PHPUnit\Framework\TestCase
     {
         $override = [
             'config' => [
-                'label' => 'Test'
-            ]
+                'label' => 'Test',
+            ],
         ];
         $configuration = $this->tcaBuilder
             ->addField('field1')
@@ -1150,8 +1150,8 @@ class TcaBuilderTest extends \PHPUnit\Framework\TestCase
             [
                 ConcreteBuilder::SHOWITEM_KEYWORD => 'field1,field2',
                 'columnsOverrides' => [
-                    'field1' => $override
-                ]
+                    'field1' => $override,
+                ],
             ],
             $configuration
         );

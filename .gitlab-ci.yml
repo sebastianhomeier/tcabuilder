@@ -37,8 +37,7 @@ stages:
     - apk update && apk add icu-dev
     - docker-php-ext-install intl
   script:
-    - vendor/bin/rector process --config .Build/rector.php -n --autoload-file=.Build/rector-autoload.php -vvv
-  allow_failure: true
+    - vendor/bin/rector process --config .Build/rector.php -n
 
 "Create Badge":
   stage: badges
@@ -69,7 +68,6 @@ stages:
   <<: *unit_tests
   variables:
     PHP_VERSION: '8.0'
-  allow_failure: true
 
 "Mutation Tests":
   stage: test

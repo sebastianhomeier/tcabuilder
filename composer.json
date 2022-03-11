@@ -26,7 +26,8 @@
     "typo3/cms-core": "^v9.5 || ^v10.4 || ^v11.5"
   },
   "require-dev": {
-    "rector/rector": "^v0.12"
+    "rector/rector": "^v0.12",
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": {

@@ -23,7 +23,8 @@ stages:
   stage: test
   image: composer:2
   before_script:
-    - composer global require phpstan/phpstan --no-plugins
+    - composer global config config.allow-plugins true
+    - composer global require phpstan/phpstan
   script:
     - composer install --ignore-platform-reqs
     - /tmp/vendor/bin/phpstan analyse -l 4 -c .Build/phpstan.neon
@@ -32,6 +33,7 @@ stages:
   stage: test
   image: composer:2
   before_script:
+    - composer global config config.allow-plugins true
     - composer install --ignore-platform-reqs
     - mkdir build
     - apk update && apk add icu-dev
@@ -49,6 +51,7 @@ stages:
   stage: test
   image: php:$PHP_VERSION
   before_script:
+    - composer global config config.allow-plugins true
     - apt-get update && apt-get install -y bash
     - bash ./.Build/docker_install.sh > /dev/null
     - composer install --ignore-platform-reqs
@@ -80,6 +83,7 @@ stages:
   only:
     - tags
   before_script:
+    - composer global config config.allow-plugins true
     - composer global require typo3/tailor
   script:
     - >

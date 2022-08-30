@@ -1,7 +1,7 @@
 {
   "name": "spooner-web/tcabuilder",
   "description": "Utility to easily maintain and create your TCA forms",
-  "type": "library",
+  "type": "typo3-cms-extension",
   "license": "GPL-2.0-or-later",
   "authors": [
     {

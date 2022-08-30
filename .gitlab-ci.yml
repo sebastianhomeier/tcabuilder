@@ -55,11 +55,11 @@ stages:
   stage: test
   image: php:$PHP_VERSION
   before_script:
+    - apt-get update && apt-get install -y bash
+    - bash ./.Build/docker_install.sh > /dev/null
     - composer config --no-interaction allow-plugins.composer/installers true
     - composer config --no-interaction allow-plugins.typo3/class-alias-loader true
     - composer config --no-interaction allow-plugins.typo3/cms-composer-installers true
-    - apt-get update && apt-get install -y bash
-    - bash ./.Build/docker_install.sh > /dev/null
     - composer install --ignore-platform-reqs
   script:
     - ls -l

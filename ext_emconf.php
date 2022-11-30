@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'TCA Builder - create and change TCA in an easy way',
     'description' => 'Utility to easily maintain and create your TCA forms',
-    'version' => '2.1.1',
+    'version' => '3.0.0',
     'category' => 'misc',
     'state' => 'stable',
     'author' => 'Thomas Löffler',
@@ -12,7 +12,7 @@ $EM_CONF[$_EXTKEY] = [
     'clearCacheOnLoad' => true,
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0 - 11.9.99',
+            'typo3' => '12.0.0 - 12.9.99',
         ],
     ],
 ];

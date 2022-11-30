@@ -86,7 +86,7 @@ stages:
 "Unit Tests with PHP 8.2":
   <<: *unit_tests
   variables:
-    PHP_VERSION: '8.2'
+    PHP_VERSION: '8.2.0RC7'
 
 "Upload to TER":
   stage: release

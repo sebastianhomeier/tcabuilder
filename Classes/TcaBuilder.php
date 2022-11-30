@@ -22,7 +22,6 @@ use SpoonerWeb\TcaBuilder\Helper\StringHelper;
 
 class TcaBuilder
 {
-
     /**
      * @var \SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder
      */

@@ -77,6 +77,7 @@ stages:
   <<: *unit_tests
   variables:
     PHP_VERSION: '8.2.0RC7'
+  allow_failure: true
 
 "Upload to TER":
   stage: release

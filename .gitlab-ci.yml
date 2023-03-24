@@ -67,6 +67,7 @@ stages:
   artifacts:
     reports:
       junit: build/*-report.xml
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
 "Unit Tests with PHP 8.1":
   <<: *unit_tests

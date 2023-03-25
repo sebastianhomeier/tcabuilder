@@ -20,7 +20,7 @@ class StringHelper
     {
         array_splice(
             $fields,
-            array_search($fieldName, $fields, true),
+            self::findFieldVariantInList($fieldName, $fields),
             1
         );
 
@@ -40,5 +40,13 @@ class StringHelper
         }
 
         return $fieldNameWithoutLabel ?: $fieldName;
+    }
+
+    public static function findFieldVariantInList(string $fieldName, array $fields): ?int
+    {
+        $pattern = '/' . $fieldName . '(;\w+)?/';
+        $matches = preg_grep($pattern, $fields);
+
+        return array_key_first($matches);
     }
 }

@@ -1003,6 +1003,27 @@ class TcaBuilderTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
+    public function removeFieldWithLabelOfExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    {
+        $this->tcaBuilder
+            ->addCustomPalette('custom', ['field1', 'field2;Test'])
+            ->addPalette('custom')
+            ->removeFieldFromPalette('custom', 'field2')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field1',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
+        );
+        self::assertEquals(
+            ConcreteBuilder::PALETTE_MARKER . ';;custom',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
+        );
+    }
+
+    /**
+     * @test
+     */
     public function initializeTypeWithEmptyListReturnsEmptyTypeListAndEmptyOverrides()
     {
         $this->tcaBuilder

@@ -155,12 +155,6 @@ class TcaBuilder
      */
     public function moveField(string $fieldName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
-        [, $field] = ArrayHelper::trimExplode(':', $newPosition);
-        $fieldWithoutLabel = '';
-        if (PositionHelper::fieldHasLabel($field)) {
-            $fieldWithoutLabel = StringHelper::removeLabelFromFieldName($field);
-        }
-
         if ($this->tcaBuilder->doesFieldExist($fieldName) && $this->tcaBuilder->doesFieldExist(ArrayHelper::trimExplode(':', $newPosition)[1])) {
             $this->tcaBuilder->removeField($fieldName);
             $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);

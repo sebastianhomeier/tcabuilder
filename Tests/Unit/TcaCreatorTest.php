@@ -13,13 +13,13 @@ namespace SpoonerWeb\TcaBuilder\Tests\Unit;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use PHPUnit\Framework\TestCase;
 use SpoonerWeb\TcaBuilder\TcaBuilder;
 use SpoonerWeb\TcaBuilder\TcaCreator;
 use SpoonerWeb\TcaBuilder\TcaTemplates\ColumnsTemplates;
 use SpoonerWeb\TcaBuilder\TcaTemplates\ControlTemplates;
 
-class TcaCreatorTest extends \PHPUnit\Framework\TestCase
+class TcaCreatorTest extends TestCase
 {
     /**
      * @test

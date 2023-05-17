@@ -16,7 +16,7 @@ namespace SpoonerWeb\TcaBuilder\Helper;
 
 class StringHelper
 {
-    public static function removeStringInList(array &$fields, string $fieldName)
+    public static function removeStringInList(array &$fields, string $fieldName): void
     {
         array_splice(
             $fields,

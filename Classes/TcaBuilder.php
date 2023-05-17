@@ -13,7 +13,6 @@ namespace SpoonerWeb\TcaBuilder;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
 use SpoonerWeb\TcaBuilder\Builder\ConcretePaletteBuilder;
 use SpoonerWeb\TcaBuilder\Helper\ArrayHelper;
@@ -23,12 +22,12 @@ use SpoonerWeb\TcaBuilder\Helper\StringHelper;
 class TcaBuilder
 {
     /**
-     * @var \SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder
+     * @var ConcreteBuilder
      */
     protected $tcaBuilder;
 
     /**
-     * @var \SpoonerWeb\TcaBuilder\Builder\ConcretePaletteBuilder
+     * @var ConcretePaletteBuilder
      */
     protected $paletteBuilder;
 

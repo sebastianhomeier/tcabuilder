@@ -5,42 +5,30 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
+use Rector\PostRector\Rector\NameImportingPostRector;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
-use Ssch\TYPO3Rector\FileProcessor\Composer\Rector\ExtensionComposerRector;
 use Ssch\TYPO3Rector\Rector\General\ConvertImplicitVariablesToExplicitGlobalsRector;
 use Ssch\TYPO3Rector\Rector\General\ExtEmConfRector;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
-    $parameters = $rectorConfig->parameters();
+
+    // If you want to override the number of spaces for your typoscript files you can define it here, the default value is 4
+    // $parameters = $rectorConfig->parameters();
+    // $parameters->set(Typo3Option::TYPOSCRIPT_INDENT_SIZE, 2);
 
     $rectorConfig->sets([
-        Typo3LevelSetList::UP_TO_TYPO3_11,
+        Typo3LevelSetList::UP_TO_TYPO3_12,
     ]);
 
-    // In order to have a better analysis from phpstan we teach it here some more things
-    $rectorConfig->phpstanConfig(Typo3Option::PHPSTAN_FOR_RECTOR_PATH);
-
-    // FQN classes are not imported by default. If you don't do it manually after every Rector run, enable it by:
-    $rectorConfig->importNames();
-
-    // this will not import root namespace classes, like \DateTime or \Exception
-    $rectorConfig->disableImportShortClasses();
-
-    // this prevents infinite loop issues due to symlinks in e.g. ".Build/" folders within single extensions
-    $parameters->set(Option::FOLLOW_SYMLINKS, false);
-
     // Define your target version which you want to support
-    $rectorConfig->phpVersion(PhpVersion::PHP_74);
-
-    // If you have an editorconfig and changed files should keep their format enable it here
-    // $parameters->set(Option::ENABLE_EDITORCONFIG, true);
+    $rectorConfig->phpVersion(PhpVersion::PHP_81);
 
     // If you only want to process one/some TYPO3 extension(s), you can specify its path(s) here.
     // If you use the option --config change __DIR__ to getcwd()
-    // $rectorConfig->paths([
-    //    __DIR__ . '/packages/acme_demo/',
-    // ]);
+    $rectorConfig->paths([
+        __DIR__ ,
+    ]);
 
     // When you use rector there are rules that require some more actions like creating UpgradeWizards for outdated TCA types.
     // To fully support you we added some warnings. So watch out for them.
@@ -48,30 +36,26 @@ return static function (RectorConfig $rectorConfig): void {
     // If you use importNames(), you should consider excluding some TYPO3 files.
     $rectorConfig->skip([
         // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
-        getcwd() . '/**/Configuration/ExtensionBuilder/*',
+        __DIR__ . '/Configuration/ExtensionBuilder/*',
         // We skip those directories on purpose as there might be node_modules or similar
         // that include typescript which would result in false positive processing
-        getcwd() . '/**/Resources/**/node_modules/*',
-        getcwd() . '/**/Resources/**/NodeModules/*',
-        getcwd() . '/**/Resources/**/BowerComponents/*',
-        getcwd() . '/**/Resources/**/bower_components/*',
-        getcwd() . '/**/Resources/**/build/*',
-        getcwd() . '/vendor/*',
-        getcwd() . '/Build/*',
-        getcwd() . '/public/*',
-        getcwd() . '/.github/*',
-        getcwd() . '/.Build/*',
-    ]);
-
-    // This is used by the class \Ssch\TYPO3Rector\Rector\PostRector\FullQualifiedNamePostRector to force FQN in these paths and files
-    $parameters->set(Typo3Option::PATHS_FULL_QUALIFIED_NAMESPACES, [
-        # If you are targeting TYPO3 Version 11 use can now use Short namespace
-        # @see namespace https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ExtensionArchitecture/ConfigurationFiles/Index.html
-        'ext_localconf.php',
-        'ext_tables.php',
-        'ClassAliasMap.php',
-        getcwd() . '/**/Configuration/*.php',
-        getcwd() . '/**/Configuration/**/*.php',
+        __DIR__ . '/Resources/**/node_modules/*',
+        __DIR__ . '/Resources/**/NodeModules/*',
+        __DIR__ . '/Resources/**/BowerComponents/*',
+        __DIR__ . '/Resources/**/bower_components/*',
+        __DIR__ . '/Resources/**/build/*',
+        __DIR__ . '/vendor/*',
+        __DIR__ . '/Build/*',
+        __DIR__ . '/public/*',
+        __DIR__ . '/.github/*',
+        __DIR__ . '/.Build/*',
+        NameImportingPostRector::class => [
+            'ext_localconf.php',
+            'ext_tables.php',
+            'ClassAliasMap.php',
+            __DIR__ . '/Configuration/*.php',
+            __DIR__ . '/Configuration/**/*.php',
+        ]
     ]);
 
     // If you have trouble that rector cannot run because some TYPO3 constants are not defined add an additional constants file
@@ -94,12 +78,6 @@ return static function (RectorConfig $rectorConfig): void {
     // Optional non-php file functionalities:
     // @see https://github.com/sabbelasichon/typo3-rector/blob/main/docs/beyond_php_file_processors.md
 
-    // Adapt your composer.json dependencies to the latest available version for the defined SetList
-    // $rectorConfig->sets([
-    //    Typo3SetList::COMPOSER_PACKAGES_104_CORE,
-    //    Typo3SetList::COMPOSER_PACKAGES_104_EXTENSIONS,
-    // ]);
-
     // Rewrite your extbase persistence class mapping from typoscript into php according to official docs.
     // This processor will create a summarized file with all the typoscript rewrites combined into a single file.
     /* $rectorConfig->ruleWithConfiguration(\Ssch\TYPO3Rector\FileProcessor\TypoScript\Rector\v10\v0\ExtbasePersistenceTypoScriptRector::class, [
@@ -109,9 +87,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ConvertImplicitVariablesToExplicitGlobalsRector::class);
     $rectorConfig->ruleWithConfiguration(ExtEmConfRector::class, [
         ExtEmConfRector::ADDITIONAL_VALUES_TO_BE_REMOVED => []
-    ]);
-    $rectorConfig->ruleWithConfiguration(ExtensionComposerRector::class, [
-        ExtensionComposerRector::TYPO3_VERSION_CONSTRAINT => ''
     ]);
 
     // Modernize your TypoScript include statements for files and move from <INCLUDE /> to @import use the FileIncludeToImportStatementVisitor (introduced with TYPO3 9.0)

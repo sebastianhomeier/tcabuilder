@@ -27,7 +27,7 @@ return static function (RectorConfig $rectorConfig): void {
     // If you only want to process one/some TYPO3 extension(s), you can specify its path(s) here.
     // If you use the option --config change __DIR__ to getcwd()
     $rectorConfig->paths([
-        __DIR__ ,
+        getcwd(),
     ]);
 
     // When you use rector there are rules that require some more actions like creating UpgradeWizards for outdated TCA types.
@@ -36,25 +36,25 @@ return static function (RectorConfig $rectorConfig): void {
     // If you use importNames(), you should consider excluding some TYPO3 files.
     $rectorConfig->skip([
         // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
-        __DIR__ . '/Configuration/ExtensionBuilder/*',
+        getcwd() . '/Configuration/ExtensionBuilder/*',
         // We skip those directories on purpose as there might be node_modules or similar
         // that include typescript which would result in false positive processing
-        __DIR__ . '/Resources/**/node_modules/*',
-        __DIR__ . '/Resources/**/NodeModules/*',
-        __DIR__ . '/Resources/**/BowerComponents/*',
-        __DIR__ . '/Resources/**/bower_components/*',
-        __DIR__ . '/Resources/**/build/*',
-        __DIR__ . '/vendor/*',
-        __DIR__ . '/Build/*',
-        __DIR__ . '/public/*',
-        __DIR__ . '/.github/*',
-        __DIR__ . '/.Build/*',
+        getcwd() . '/Resources/**/node_modules/*',
+        getcwd() . '/Resources/**/NodeModules/*',
+        getcwd() . '/Resources/**/BowerComponents/*',
+        getcwd() . '/Resources/**/bower_components/*',
+        getcwd() . '/Resources/**/build/*',
+        getcwd() . '/vendor/*',
+        getcwd() . '/Build/*',
+        getcwd() . '/public/*',
+        getcwd() . '/.github/*',
+        getcwd() . '/.Build/*',
         NameImportingPostRector::class => [
             'ext_localconf.php',
             'ext_tables.php',
             'ClassAliasMap.php',
-            __DIR__ . '/Configuration/*.php',
-            __DIR__ . '/Configuration/**/*.php',
+            getcwd() . '/Configuration/*.php',
+            getcwd() . '/Configuration/**/*.php',
         ]
     ]);
 
@@ -62,7 +62,7 @@ return static function (RectorConfig $rectorConfig): void {
     // @see https://github.com/sabbelasichon/typo3-rector/blob/master/typo3.constants.php
     // @see https://github.com/rectorphp/rector/blob/main/docs/static_reflection_and_autoload.md#include-files
     // $parameters->set(Option::BOOTSTRAP_FILES, [
-    //    __DIR__ . '/typo3.constants.php'
+    //    getcwd() . '/typo3.constants.php'
     // ]);
 
     // register a single rule
@@ -81,7 +81,7 @@ return static function (RectorConfig $rectorConfig): void {
     // Rewrite your extbase persistence class mapping from typoscript into php according to official docs.
     // This processor will create a summarized file with all the typoscript rewrites combined into a single file.
     /* $rectorConfig->ruleWithConfiguration(\Ssch\TYPO3Rector\FileProcessor\TypoScript\Rector\v10\v0\ExtbasePersistenceTypoScriptRector::class, [
-        \Ssch\TYPO3Rector\FileProcessor\TypoScript\Rector\v10\v0\ExtbasePersistenceTypoScriptRector::FILENAME => __DIR__ . '/packages/acme_demo/Configuration/Extbase/Persistence/Classes.php',
+        \Ssch\TYPO3Rector\FileProcessor\TypoScript\Rector\v10\v0\ExtbasePersistenceTypoScriptRector::FILENAME => getcwd() . '/packages/acme_demo/Configuration/Extbase/Persistence/Classes.php',
     ]); */
     // Add some general TYPO3 rules
     $rectorConfig->rule(ConvertImplicitVariablesToExplicitGlobalsRector::class);

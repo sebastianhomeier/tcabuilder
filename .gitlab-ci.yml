@@ -69,11 +69,6 @@ stages:
       junit: build/*-report.xml
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
-"Unit Tests with PHP 7.4":
-  <<: *unit_tests
-  variables:
-    PHP_VERSION: '7.4'
-
 "Unit Tests with PHP 8.1":
   <<: *unit_tests
   variables:

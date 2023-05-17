@@ -11,7 +11,7 @@ apt-get install git unzip zlib1g-dev libzip-dev apt-utils -yqq
 docker-php-ext-install zip
 
 # Install xdebug
-docker-php-ext-install xdebug
+pecl install xdebug
 docker-php-ext-enable xdebug
 
 # Install composer
